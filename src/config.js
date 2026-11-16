@@ -15,7 +15,7 @@ export const ABOUT = {
   heading: 'Quality used cars you can trust, in Coimbatore',
   tamil: 'பழைய கார்கள் வாங்க – விற்க',
   text:
-    'Joel Cars buys and sells quality pre-owned cars from our showroom in Saravanampatti, Coimbatore. Every car listed here is available with us right now, with real photos and a fixed price. Call or WhatsApp our manager, visit the showroom, take a test drive and decide in person.',
+    'Joel Cars buys and sells quality pre-owned cars from our showroom in Saravanampatti, Coimbatore. Every car listed here is available with us right now, with real photos and a price you can negotiate. Call or WhatsApp our manager, visit the showroom, take a test drive and decide in person.',
 };
 
 // Options offered in the admin form.
@@ -28,12 +28,9 @@ export const FEATURES = [
 export const TRUST = [
   { icon: 'shield', title: 'Checked before listing', text: 'Every car is inspected by us before it goes on the website' },
   { icon: 'file', title: 'Clear documents', text: 'RC, insurance and service records shown to you' },
-  { icon: 'rupee', title: 'Fixed, honest prices', text: 'The price you see is the price you discuss' },
+  { icon: 'rupee', title: 'Negotiable prices', text: 'Talk to our manager and agree a fair price' },
   { icon: 'key', title: 'Test drive welcome', text: 'Visit our showroom and drive before you decide' },
 ];
-
-// Indicative EMI shown on car cards and the calculator (not a loan offer).
-export const EMI = { rate: 10.5, years: 5, downPct: 20 };
 
 // Set in .env (see .env.example). When empty the site runs in local demo mode.
 export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';

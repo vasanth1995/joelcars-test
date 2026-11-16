@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
 import { BUSINESS } from '../config';
-import { emi, inr, km, lakh, waLink } from '../lib/format';
+import { inr, km, lakh, waLink } from '../lib/format';
 import Icon, { WhatsAppIcon } from './Icons';
 
 export const thumbOf = (car, i = 0) => car.details?.thumbs?.[i] || car.images?.[i];
 
 export default function CarCard({ car, priority = false }) {
   const isNew = Date.now() - new Date(car.created_at).getTime() < 7 * 864e5;
-  const m = emi(car.price).monthly;
   const d = car.details || {};
   const specs = [
     car.year && ['calendar', car.year],
@@ -60,8 +59,7 @@ export default function CarCard({ car, priority = false }) {
 
       <div className="card-buy">
         <div className="price">{lakh(car.price)}</div>
-        <div className="price-full">{inr(car.price)} • fixed price</div>
-        {m > 0 && <div className="emi">EMI from <b>{inr(Math.round(m / 100) * 100)}</b>/month*</div>}
+        <div className="price-full">{inr(car.price)} • price negotiable</div>
         <div className="card-actions">
           <Link to={`/car/${car.id}`} className="btn btn-red">View details <Icon name="arrow" size={16} /></Link>
           <div className="mini">

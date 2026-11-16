@@ -9,7 +9,7 @@ import { waLink } from '../lib/format';
 const STEPS = [
   ['search', 'Browse online', 'See every photo of each car and its price, from your phone.'],
   ['car', 'Visit & test drive', 'Come to our Saravanampatti showroom and drive the car yourself.'],
-  ['key', 'Drive home', 'We help with RC transfer and finance paperwork, then hand over the keys.'],
+  ['key', 'Drive home', 'We help with the RC transfer paperwork, then hand over the keys.'],
 ];
 
 export default function Home() {
@@ -98,7 +98,6 @@ export default function Home() {
         <div className="car-list">
           {cars?.map((c, i) => <CarCard key={c.id} car={c} priority={i === 0} />)}
         </div>
-        {count > 0 && <p className="fine">*EMI is indicative: 20% down payment, 5 years, 10.5% interest. Actual loan terms depend on the bank.</p>}
       </section>
 
       {sold.length > 0 && (

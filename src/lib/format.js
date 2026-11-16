@@ -1,4 +1,4 @@
-import { BUSINESS, EMI } from '../config';
+import { BUSINESS } from '../config';
 
 // Indian digit grouping: ₹4,85,000
 export const inr = (n) => '₹' + Math.round(Number(n || 0)).toLocaleString('en-IN');
@@ -12,16 +12,6 @@ export const lakh = (n) => {
 };
 
 export const km = (n) => (n || n === 0 ? Number(n).toLocaleString('en-IN') + ' km' : '');
-
-// Standard reducing-balance EMI formula.
-export function emi(price, { rate = EMI.rate, years = EMI.years, downPct = EMI.downPct } = {}) {
-  const principal = Number(price || 0) * (1 - downPct / 100);
-  const r = rate / 12 / 100;
-  const n = years * 12;
-  if (!principal) return { monthly: 0, principal: 0, interest: 0 };
-  const monthly = r === 0 ? principal / n : (principal * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-  return { monthly, principal, interest: monthly * n - principal };
-}
 
 export const waLink = (car, text) =>
   `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(

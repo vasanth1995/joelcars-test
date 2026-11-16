@@ -85,8 +85,6 @@ button{cursor:pointer}
 .price-row{display:flex;align-items:baseline;gap:10px;margin-top:6px;flex-wrap:wrap}
 .price{font-size:1.45rem;font-weight:800;color:var(--navy)}
 .price-full{font-size:.82rem;color:var(--muted)}
-.emi{font-size:.84rem;color:var(--green);margin-top:2px}
-.emi b{font-weight:700}
 .specs-row{list-style:none;padding:0;margin:12px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:.84rem;color:#33405e}
 .specs-row li{display:flex;align-items:center;gap:7px}
 .specs-row .ic{color:var(--blue)}
@@ -168,18 +166,8 @@ button{cursor:pointer}
 .buy-box h1{font-size:1.35rem;line-height:1.3}
 .big-price{font-size:2.15rem;font-weight:800;color:var(--navy);margin-top:10px;line-height:1.1}
 .price-words{color:var(--muted);font-size:.85rem;margin-top:2px}
-.buy-box .emi{margin:8px 0 6px}
 .visit{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px;font-size:.84rem;color:var(--muted)}
 .visit span{display:flex;gap:8px;align-items:flex-start}.visit .ic{color:var(--blue);margin-top:2px}
-.emi-box{margin-top:16px}
-.emi-result{display:flex;justify-content:space-between;align-items:baseline;background:var(--soft);border-radius:12px;padding:14px 16px;margin-bottom:14px}
-.emi-result span{color:var(--muted);font-size:.85rem}.emi-result b{font-size:1.5rem;color:var(--blue)}
-.emi-box label{display:block;font-size:.84rem;color:var(--muted);margin-bottom:12px}
-.emi-box label b{color:var(--ink)}
-.emi-box input[type=range]{width:100%;accent-color:var(--blue);margin-top:6px}
-.emi-split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
-.emi-split div{background:var(--bg);border-radius:10px;padding:10px 12px}
-.emi-split small{display:block;color:var(--muted);font-size:.74rem}
 .specs{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
 .specs div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.9rem}
 .specs dt{color:var(--muted)}.specs dd{font-weight:600;text-align:right}
@@ -265,7 +253,6 @@ th{font-size:.76rem;text-transform:uppercase;color:var(--muted);letter-spacing:.
 .card-buy{padding:20px 22px;border-left:1px dashed var(--line);display:flex;flex-direction:column;gap:2px;background:#fcfcfd}
 .card-buy .price{font-size:1.85rem;line-height:1.1}
 .card-buy .price-full{font-size:.78rem}
-.card-buy .emi{margin:6px 0 10px}
 .card-actions{display:flex;flex-direction:column;gap:8px;padding:0;margin-top:auto}
 .card-actions .btn{width:100%}
 .card-actions .mini{display:grid;grid-template-columns:1fr 1fr;gap:8px}

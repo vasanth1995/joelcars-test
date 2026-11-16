@@ -1,41 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getCar, listCars } from '../lib/api';
 import Gallery from '../components/Gallery';
 import CarCard from '../components/CarCard';
 import Icon, { WhatsAppIcon } from '../components/Icons';
-import { emi, inr, km, lakh, waLink } from '../lib/format';
-import { BUSINESS, EMI } from '../config';
-
-function EmiCalculator({ price }) {
-  const [downPct, setDownPct] = useState(EMI.downPct);
-  const [years, setYears] = useState(EMI.years);
-  const [rate, setRate] = useState(EMI.rate);
-  const r = useMemo(() => emi(price, { downPct, years, rate }), [price, downPct, years, rate]);
-  return (
-    <div className="box emi-box">
-      <h3>EMI calculator</h3>
-      <div className="emi-result">
-        <span>Monthly EMI</span>
-        <b>{inr(Math.round(r.monthly))}</b>
-      </div>
-      <label>Down payment <b>{downPct}%</b> ({inr((price * downPct) / 100)})
-        <input type="range" min="10" max="60" step="5" value={downPct} onChange={(e) => setDownPct(+e.target.value)} />
-      </label>
-      <label>Loan period <b>{years} years</b>
-        <input type="range" min="1" max="7" value={years} onChange={(e) => setYears(+e.target.value)} />
-      </label>
-      <label>Interest rate <b>{rate}%</b> per year
-        <input type="range" min="8" max="16" step="0.5" value={rate} onChange={(e) => setRate(+e.target.value)} />
-      </label>
-      <div className="emi-split">
-        <div><small>Loan amount</small><b>{inr(r.principal)}</b></div>
-        <div><small>Total interest</small><b>{inr(r.interest)}</b></div>
-      </div>
-      <p className="fine">Indicative only. Final loan amount, rate and approval are decided by the bank. Ask our manager for finance help.</p>
-    </div>
-  );
-}
+import { inr, km, lakh, waLink } from '../lib/format';
+import { BUSINESS } from '../config';
 
 export default function CarDetail() {
   const { id } = useParams();
@@ -76,7 +46,6 @@ export default function CarDetail() {
       </div>
     );
 
-  const m = emi(car.price).monthly;
   const facts = [
     car.year && ['calendar', 'Year', car.year],
     car.km != null && car.km !== '' && ['gauge', 'Driven', km(car.km)],
@@ -133,8 +102,7 @@ export default function CarDetail() {
             <h1>{car.title}</h1>
             <p className="muted">{[car.details?.variant, car.year, car.fuel, car.transmission].filter(Boolean).join(' • ')}</p>
             <div className="big-price">{inr(car.price)}</div>
-            <p className="price-words">{lakh(car.price)} • fixed price</p>
-            {m > 0 && <p className="emi">EMI from <b>{inr(Math.round(m / 100) * 100)}</b>/month*</p>}
+            <p className="price-words">{lakh(car.price)} • price negotiable</p>
             <a className="btn btn-yellow full big" href={`tel:+91${BUSINESS.phone}`}><Icon name="phone" /> Call manager</a>
             <a className="btn btn-wa full big" href={waLink(car)} target="_blank" rel="noreferrer"><WhatsAppIcon /> WhatsApp about this car</a>
             <a
@@ -150,7 +118,6 @@ export default function CarDetail() {
               <span><Icon name="clock" size={16} /> {BUSINESS.hours}</span>
             </div>
           </div>
-          <EmiCalculator price={Number(car.price)} />
         </aside>
       </div>
 

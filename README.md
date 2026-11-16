@@ -3,7 +3,7 @@
 Used-car showroom website for Joel Cars, Saravanampatti, Coimbatore.
 React + Vite, hosted free on GitHub Pages, with Supabase (free) for cars, photos and the admin login.
 
-- Public site: cars, photo gallery (auto-changing, click to pin), EMI calculator, call / WhatsApp buttons, "Happy owners" strip.
+- Public site: cars, photo gallery (auto-changing, click to pin), call / WhatsApp buttons, "Happy owners" strip.
 - Admin: `#/admin`. Add a car with photos, delete a sold car (its photos are removed too), manage happy-owner photos.
 
 ## Run locally
@@ -20,5 +20,5 @@ Without a `.env` file the site runs in demo mode (admin password `admin123`, dat
 3. Add repository **variables** `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (Settings → Secrets and variables → Actions → Variables).
 4. Settings → Pages → Source: **GitHub Actions**. Every push to `main` redeploys.
 
-Business details (phone, address, hours, trust points, EMI defaults) live in `src/config.js`.
+Business details (phone, address, hours, trust points) live in `src/config.js`.
 Never commit the Supabase `service_role` / secret key.
