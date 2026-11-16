@@ -1,11 +1,13 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { BUSINESS } from '../config';
+import Icon, { WhatsAppIcon } from './Icons';
+import { waLink } from '../lib/format';
 
 export function goSection(navigate, pathname, id) {
   const scroll = () => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   if (pathname !== '/') {
     navigate('/');
-    setTimeout(scroll, 120);
+    setTimeout(scroll, 150);
   } else scroll();
 }
 
@@ -16,27 +18,29 @@ export default function Header() {
     <header className="header">
       <div className="topbar">
         <div className="wrap topbar-in">
-          <span>📍 Saravanampatti, Coimbatore</span>
-          <span className="hide-sm">🕘 {BUSINESS.hours}</span>
-          <a href={`tel:+91${BUSINESS.phone}`}>📞 {BUSINESS.phoneDisplay}</a>
+          <span><Icon name="pin" size={14} /> Saravanampatti, Coimbatore</span>
+          <span className="hide-sm"><Icon name="clock" size={14} /> {BUSINESS.hours}</span>
+          <a href={`tel:+91${BUSINESS.phone}`}><Icon name="phone" size={14} /> {BUSINESS.phoneDisplay}</a>
         </div>
       </div>
       <div className="wrap nav">
-        <Link to="/" className="brand">
-          <span className="logo">J</span>
-          <span>
-            <b>Joel</b> <i>Cars</i>
-            <small>Quality Used Cars</small>
+        <Link to="/" className="brand" aria-label="Joel Cars home">
+          <span className="logo"><Icon name="car" size={24} /></span>
+          <span className="brand-text">
+            <b>Joel <i>Cars</i></b>
+            <small>Quality used cars</small>
           </span>
         </Link>
-        <nav className="links">
+        <nav className="links" aria-label="Main">
           <button onClick={() => goSection(navigate, pathname, 'cars')}>Available Cars</button>
-          <button onClick={() => goSection(navigate, pathname, 'sold')}>Sold Cars</button>
+          <button onClick={() => goSection(navigate, pathname, 'how')}>How it works</button>
+          <button onClick={() => goSection(navigate, pathname, 'sold')}>Happy Owners</button>
           <button onClick={() => goSection(navigate, pathname, 'contact')}>Contact</button>
         </nav>
-        <a className="btn btn-yellow nav-call" href={`tel:+91${BUSINESS.phone}`}>
-          Call Now
-        </a>
+        <div className="nav-actions">
+          <a className="btn btn-wa hide-sm" href={waLink()} target="_blank" rel="noreferrer"><WhatsAppIcon size={18} /> WhatsApp</a>
+          <a className="btn btn-yellow" href={`tel:+91${BUSINESS.phone}`}><Icon name="phone" size={18} /> <span>Call Now</span></a>
+        </div>
       </div>
     </header>
   );

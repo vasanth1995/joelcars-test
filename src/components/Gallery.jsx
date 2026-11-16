@@ -58,7 +58,7 @@ export default function Gallery({ images, title }) {
             {i + 1} / {n}
           </span>
           {n > 1 && (
-            <button onClick={() => setPinned((p) => !p)}>{pinned ? '▶ Auto-play' : '⏸ Pause'}</button>
+            <button onClick={() => setPinned((p) => !p)}>{pinned ? "Play" : "Pause"}</button>
           )}
         </div>
         {!pinned && n > 1 && <div className="progress" key={i} style={{ animationDuration: `${SLIDE_MS}ms` }} />}

@@ -106,7 +106,7 @@ export default function Admin() {
   return (
     <div className="admin">
       <div className="admin-bar">
-        <b>🚗 Joel Cars – Admin</b>
+        <b>Joel Cars – Admin</b>
         <span>
           <Link to="/" className="btn btn-ghost sm">View website</Link>{' '}
           <button className="btn btn-ghost sm" onClick={async () => { await logout(); setAuthed(false); }}>Log out</button>
@@ -137,7 +137,7 @@ export default function Admin() {
                         disabled={busy}
                         onClick={() => confirm(`Delete "${c.title}" and all its photos? This cannot be undone.`) && run(() => deleteCar(c), 'Car and its photos deleted.')}
                       >
-                        🗑 Sold – Delete
+                        Sold – Delete
                       </button>
                     </td>
                   </tr>
