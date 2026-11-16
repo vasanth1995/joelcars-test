@@ -14,6 +14,7 @@ create table if not exists public.cars (
   description text,
   images text[] not null default '{}',
   image_paths text[] not null default '{}',
+  details jsonb not null default '{}'::jsonb,
   created_at timestamptz not null default now()
 );
 

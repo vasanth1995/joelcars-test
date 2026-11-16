@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { DEMO } from '../config';
+import { DEMO, FEATURES } from '../config';
 import { addCar, addSold, deleteCar, deleteSold, getSession, listCars, listSold, login, logout, DEMO_PASSWORD } from '../lib/api';
 import { inr } from '../lib/format';
 
 const EMPTY = { title: '', brand: '', year: '', price: '', km: '', fuel: 'Petrol', transmission: 'Manual', owner_count: '1st Owner', location: 'Coimbatore', description: '' };
+const EMPTY_D = { variant: '', color: '', registration: '', seats: '5', insurance: 'Comprehensive insurance', service: 'Available', features: [] };
 
 function Login({ onDone }) {
   const [email, setEmail] = useState('');
@@ -30,7 +31,7 @@ function Login({ onDone }) {
         {DEMO ? <p className="muted small">Demo mode – password: <b>{DEMO_PASSWORD}</b></p> : <input type="email" required placeholder="Admin email" value={email} onChange={(e) => setEmail(e.target.value)} />}
         <input type="password" required placeholder="Password" value={pw} onChange={(e) => setPw(e.target.value)} />
         {err && <p className="error">{err}</p>}
-        <button className="btn btn-blue full" disabled={busy}>{busy ? 'Signing in…' : 'Sign in'}</button>
+        <button className="btn btn-red full" disabled={busy}>{busy ? 'Signing in…' : 'Sign in'}</button>
         <Link to="/" className="muted small">← Back to website</Link>
       </form>
     </div>
@@ -53,6 +54,7 @@ export default function Admin() {
   const [cars, setCars] = useState([]);
   const [sold, setSold] = useState([]);
   const [form, setForm] = useState(EMPTY);
+  const [d, setD] = useState(EMPTY_D);
   const [files, setFiles] = useState([]);
   const [soldFiles, setSoldFiles] = useState([]);
   const [caption, setCaption] = useState('');
@@ -87,16 +89,21 @@ export default function Admin() {
   if (!authed) return <Login onDone={() => setAuthed(true)} />;
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  const setDet = (k) => (e) => setD({ ...d, [k]: e.target.value });
+  const toggleFeat = (f) => setD({ ...d, features: d.features.includes(f) ? d.features.filter((x) => x !== f) : [...d.features, f] });
 
   const submitCar = (e) => {
     e.preventDefault();
     if (!files.length) return setMsg('❌ Please choose at least one photo.');
     run(async () => {
-      await addCar(
+      const res = await addCar(
         { ...form, year: +form.year || null, price: +form.price, km: +form.km || null },
+        d,
         files
       );
+      if (res?.warning) alert(res.warning);
       setForm(EMPTY);
+      setD(EMPTY_D);
       setFiles([]);
       e.target.reset();
       setTab('cars');
@@ -133,7 +140,7 @@ export default function Admin() {
                     <td>{c.images?.length || 0}</td>
                     <td>
                       <button
-                        className="btn btn-red sm"
+                        className="btn btn-del sm"
                         disabled={busy}
                         onClick={() => confirm(`Delete "${c.title}" and all its photos? This cannot be undone.`) && run(() => deleteCar(c), 'Car and its photos deleted.')}
                       >
@@ -162,12 +169,29 @@ export default function Admin() {
               <label>Ownership<select value={form.owner_count} onChange={set('owner_count')}>{['1st Owner', '2nd Owner', '3rd Owner', '4th+ Owner'].map((x) => <option key={x}>{x}</option>)}</select></label>
               <label>Location<input value={form.location} onChange={set('location')} /></label>
             </div>
+            <h3 className="sub">More details (shown on the car page)</h3>
+            <div className="fgrid">
+              <label>Variant<input value={d.variant} onChange={setDet('variant')} placeholder="VXi, ZX, SX (O)…" /></label>
+              <label>Colour<input value={d.color} onChange={setDet('color')} placeholder="Pearl White" /></label>
+              <label>Registration (RTO)<input value={d.registration} onChange={setDet('registration')} placeholder="TN 66" /></label>
+              <label>Seats<select value={d.seats} onChange={setDet('seats')}>{['2', '4', '5', '6', '7', '8'].map((x) => <option key={x}>{x}</option>)}</select></label>
+              <label>Insurance<select value={d.insurance} onChange={setDet('insurance')}>{['Comprehensive insurance', 'Third-party insurance', 'Expired – to be renewed'].map((x) => <option key={x}>{x}</option>)}</select></label>
+              <label>Service history<select value={d.service} onChange={setDet('service')}>{['Available', 'Not available'].map((x) => <option key={x}>{x}</option>)}</select></label>
+            </div>
+            <fieldset className="feat-pick">
+              <legend>Features (tick all that apply)</legend>
+              {FEATURES.map((f) => (
+                <label key={f} className={d.features.includes(f) ? 'on' : ''}>
+                  <input type="checkbox" checked={d.features.includes(f)} onChange={() => toggleFeat(f)} /> {f}
+                </label>
+              ))}
+            </fieldset>
             <label>Description<textarea rows="4" value={form.description} onChange={set('description')} placeholder="Condition, service history, insurance, etc." /></label>
             <label>Photos * (select 6–7 at once; the first is the cover)
               <input type="file" accept="image/*" multiple onChange={(e) => setFiles([...e.target.files])} />
             </label>
             <Previews files={files} />
-            <button className="btn btn-blue" disabled={busy}>{busy ? 'Uploading… please wait' : 'Publish car'}</button>
+            <button className="btn btn-red" disabled={busy}>{busy ? 'Uploading… please wait' : 'Publish car'}</button>
           </form>
         )}
 
@@ -185,14 +209,14 @@ export default function Admin() {
               <label>Caption (optional)<input value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="Hyundai i20 – delivered to Mr. Kumar" /></label>
               <label>Photos<input type="file" accept="image/*" multiple onChange={(e) => setSoldFiles([...e.target.files])} /></label>
               <Previews files={soldFiles} />
-              <button className="btn btn-blue" disabled={busy}>{busy ? 'Uploading…' : 'Upload'}</button>
+              <button className="btn btn-red" disabled={busy}>{busy ? 'Uploading…' : 'Upload'}</button>
             </form>
             <div className="sold-admin">
               {sold.map((s) => (
                 <div key={s.id} className="box">
                   <img src={s.image_url} alt="" />
                   <small>{s.caption}</small>
-                  <button className="btn btn-red sm" disabled={busy} onClick={() => confirm('Remove this photo?') && run(() => deleteSold(s), 'Photo removed.')}>Delete</button>
+                  <button className="btn btn-del sm" disabled={busy} onClick={() => confirm('Remove this photo?') && run(() => deleteSold(s), 'Photo removed.')}>Delete</button>
                 </div>
               ))}
             </div>

@@ -3,11 +3,13 @@ import { SLIDE_MS } from '../config';
 
 // Photos change automatically every few seconds. Clicking a thumbnail pins that photo
 // (auto-change stops) until the visitor presses "Auto-play".
-export default function Gallery({ images, title }) {
+export default function Gallery({ images, thumbs = [], title }) {
   const [i, setI] = useState(0);
   const [pinned, setPinned] = useState(false);
   const touchX = useRef(null);
   const n = images.length;
+  // Only the current, next and previous photos are downloaded, so the page opens fast.
+  const near = (idx) => idx === i || idx === (i + 1) % n || idx === (i - 1 + n) % n;
 
   useEffect(() => {
     if (pinned || n < 2) return;
@@ -28,7 +30,7 @@ export default function Gallery({ images, title }) {
       <div className="thumbs">
         {images.map((src, idx) => (
           <button key={idx} className={idx === i ? 'on' : ''} onClick={() => pick(idx)} aria-label={`Photo ${idx + 1}`}>
-            <img src={src} alt="" loading="lazy" />
+            <img src={thumbs[idx] || src} alt="" width="88" height="66" loading="lazy" decoding="async" />
           </button>
         ))}
       </div>
@@ -41,7 +43,7 @@ export default function Gallery({ images, title }) {
         }}
       >
         {images.map((src, idx) => (
-          <img key={idx} src={src} alt={`${title} photo ${idx + 1}`} className={idx === i ? 'show' : ''} />
+          <img key={idx} src={near(idx) ? src : undefined} alt={`${title} photo ${idx + 1}`} className={idx === i ? 'show' : ''} decoding="async" />
         ))}
         {n > 1 && (
           <>

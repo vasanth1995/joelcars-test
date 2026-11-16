@@ -71,7 +71,7 @@ export default function CarDetail() {
           <Icon name="car" size={40} />
           <h3>This car is no longer available</h3>
           <p>It may have just been sold. Have a look at our other cars.</p>
-          <Link className="btn btn-blue" to="/">See available cars</Link>
+          <Link className="btn btn-red" to="/">See available cars</Link>
         </div>
       </div>
     );
@@ -92,7 +92,7 @@ export default function CarDetail() {
       </p>
       <div className="detail-grid">
         <div>
-          <Gallery images={car.images || []} title={car.title} />
+          <Gallery images={car.images || []} thumbs={car.details?.thumbs || []} title={car.title} />
           <div className="fact-row">
             {facts.map(([ic, k, v]) => (
               <div key={k} className="fact">
@@ -102,6 +102,14 @@ export default function CarDetail() {
               </div>
             ))}
           </div>
+          {(car.details?.features || []).length > 0 && (
+            <div className="box">
+              <h3>Features</h3>
+              <ul className="feats big">
+                {car.details.features.map((f) => <li key={f}><Icon name="check" size={15} /> {f}</li>)}
+              </ul>
+            </div>
+          )}
           {car.description && (
             <div className="box">
               <h3>About this car</h3>
@@ -111,7 +119,7 @@ export default function CarDetail() {
           <div className="box">
             <h3>Details</h3>
             <dl className="specs">
-              {[['Brand', car.brand], ['Model', car.title], ['Year', car.year], ['Kilometres driven', km(car.km)], ['Fuel type', car.fuel], ['Transmission', car.transmission], ['Ownership', car.owner_count], ['Location', car.location || 'Coimbatore']]
+              {[['Brand', car.brand], ['Model', car.title], ['Variant', car.details?.variant], ['Colour', car.details?.color], ['Year', car.year], ['Registration', car.details?.registration], ['Seats', car.details?.seats], ['Kilometres driven', km(car.km)], ['Fuel type', car.fuel], ['Transmission', car.transmission], ['Ownership', car.owner_count], ['Insurance', car.details?.insurance], ['Service history', car.details?.service], ['Location', car.location || 'Coimbatore']]
                 .filter((s) => s[1])
                 .map(([k, v]) => (
                   <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
@@ -123,7 +131,7 @@ export default function CarDetail() {
         <aside className="side">
           <div className="buy-box">
             <h1>{car.title}</h1>
-            <p className="muted">{[car.year, car.fuel, car.transmission].filter(Boolean).join(' • ')}</p>
+            <p className="muted">{[car.details?.variant, car.year, car.fuel, car.transmission].filter(Boolean).join(' • ')}</p>
             <div className="big-price">{inr(car.price)}</div>
             <p className="price-words">{lakh(car.price)} • fixed price</p>
             {m > 0 && <p className="emi">EMI from <b>{inr(Math.round(m / 100) * 100)}</b>/month*</p>}
@@ -149,7 +157,7 @@ export default function CarDetail() {
       {others.length > 0 && (
         <section className="similar">
           <h2>More cars you may like</h2>
-          <div className="grid">
+          <div className="car-list">
             {others.map((c) => <CarCard key={c.id} car={c} />)}
           </div>
         </section>

@@ -15,6 +15,7 @@ Without a `.env` file the site runs in demo mode (admin password `admin123`, dat
 
 ## Go live
 1. Create a free Supabase project and run `supabase/schema.sql` in its SQL Editor.
+1b. Also run `supabase/migration-002-details.sql` (adds the colour / insurance / features field). Needed only if you created the database before this file existed.
 2. Add an admin user under Authentication → Users, and turn **off** "Allow new users to sign up".
 3. Add repository **variables** `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (Settings → Secrets and variables → Actions → Variables).
 4. Settings → Pages → Source: **GitHub Actions**. Every push to `main` redeploys.

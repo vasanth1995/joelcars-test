@@ -10,6 +10,20 @@ export const BUSINESS = {
   mapQuery: 'Senthil Nagar Extension Saravanampatti Coimbatore 641035',
 };
 
+// About text shown at the top of the home page. Edit freely.
+export const ABOUT = {
+  heading: 'Quality used cars you can trust, in Coimbatore',
+  tamil: 'பழைய கார்கள் வாங்க – விற்க',
+  text:
+    'Joel Cars buys and sells quality pre-owned cars from our showroom in Saravanampatti, Coimbatore. Every car listed here is available with us right now, with real photos and a fixed price. Call or WhatsApp our manager, visit the showroom, take a test drive and decide in person.',
+};
+
+// Options offered in the admin form.
+export const FEATURES = [
+  'Air conditioning', 'Power steering', 'Power windows', 'Music system', 'Touchscreen', 'Bluetooth',
+  'Rear camera', 'Airbags', 'ABS', 'Alloy wheels', 'Sunroof', 'Cruise control', 'Keyless entry', 'Central locking',
+];
+
 // Promises shown on the site. Change the wording to match exactly what you offer.
 export const TRUST = [
   { icon: 'shield', title: 'Checked before listing', text: 'Every car is inspected by us before it goes on the website' },
@@ -20,14 +34,6 @@ export const TRUST = [
 
 // Indicative EMI shown on car cards and the calculator (not a loan offer).
 export const EMI = { rate: 10.5, years: 5, downPct: 20 };
-
-export const BUDGETS = [
-  { label: 'Under ₹3 Lakh', min: 0, max: 300000 },
-  { label: '₹3 – 5 Lakh', min: 300000, max: 500000 },
-  { label: '₹5 – 8 Lakh', min: 500000, max: 800000 },
-  { label: '₹8 – 12 Lakh', min: 800000, max: 1200000 },
-  { label: 'Above ₹12 Lakh', min: 1200000, max: Infinity },
-];
 
 // Set in .env (see .env.example). When empty the site runs in local demo mode.
 export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';

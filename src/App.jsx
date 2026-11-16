@@ -1,11 +1,11 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Icon, { WhatsAppIcon } from './components/Icons';
 import Home from './pages/Home';
 import CarDetail from './pages/CarDetail';
-import Admin from './pages/Admin';
+const Admin = lazy(() => import('./pages/Admin')); // admin code + Supabase library load only on /admin
 import { BUSINESS, DEMO } from './config';
 import { waLink } from './lib/format';
 
@@ -30,7 +30,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/car/:id" element={<CarDetail />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<Suspense fallback={<div className="wrap section muted">Loading…</div>}><Admin /></Suspense>} />
         <Route path="*" element={<Home />} />
       </Routes>
       {!isAdmin && <Footer />}

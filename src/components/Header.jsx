@@ -25,11 +25,8 @@ export default function Header() {
       </div>
       <div className="wrap nav">
         <Link to="/" className="brand" aria-label="Joel Cars home">
-          <span className="logo"><Icon name="car" size={24} /></span>
-          <span className="brand-text">
-            <b>Joel <i>Cars</i></b>
-            <small>Quality used cars</small>
-          </span>
+          <span className="logo-crop"><img src={`${import.meta.env.BASE_URL}logo.webp`} width="138" height="138" alt="" /></span>
+          <span className="wordmark"><b>Joel Cars</b><small>Used car dealer</small></span>
         </Link>
         <nav className="links" aria-label="Main">
           <button onClick={() => goSection(navigate, pathname, 'cars')}>Available Cars</button>
