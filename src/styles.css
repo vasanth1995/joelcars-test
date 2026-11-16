@@ -316,3 +316,12 @@ th{font-size:.76rem;text-transform:uppercase;color:var(--muted);letter-spacing:.
   .logo-crop{width:74px}.logo-crop img{left:-23px}
   .trust{scroll-padding:0 16px}
 }
+
+/* ===== whole card is tappable (the car-name link stretches over the card) ===== */
+.card.row{position:relative;cursor:pointer}
+.card-title::after{content:"";position:absolute;inset:0;z-index:1;border-radius:var(--r)}
+.card-title:focus-visible{outline:0}
+.card-title:focus-visible::after{outline:3px solid #ff8a92;outline-offset:2px}
+.card-buy .card-actions{position:relative;z-index:2;cursor:default}
+.card-buy .card-actions .btn{cursor:pointer}
+.card.row,.card-title{-webkit-tap-highlight-color:rgba(217,32,44,.12)}
